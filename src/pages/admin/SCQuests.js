@@ -4,22 +4,25 @@ import {
   Divider,
   FormControl,
   Grid,
+  IconButton,
+  InputAdornment,
   InputLabel,
+  OutlinedInput,
   Select,
   TextField,
   Typography,
-  InputAdornment,
-  OutlinedInput,
-  IconButton,
 } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import Header from "../../components/Header";
 import { addSCQuestion } from "../../reducers/singleChoiceReducer";
-import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import deleteArrayElement from "../../utils/deleteArrayElement";
+import detectEmpty from "../../utils/detectEmpty";
 
 const SCQuests = () => {
   const quests = useSelector((state) => state.singlechoices);
@@ -30,7 +33,7 @@ const SCQuests = () => {
     { field: "choice", headerName: "选项", width: 280 },
     { field: "correct", headerName: "正确答案", width: 200 },
   ];
-  
+
   const rows = quests.map((quest, arynum) => {
     return {
       id: arynum + 1,
@@ -64,17 +67,40 @@ const AddSCQ = () => {
   const [correctErr, setCorrectErr] = useState(false);
   const [img, setImg] = useState("");
   const dispatch = useDispatch();
-
+  const { enqueueSnackbar } = useSnackbar();
   const submitQuest = () => {
     //Detect all requirements
-    if (!stem && !correct) {
+    if (!stem) {
       setStemErr(true);
+      enqueueSnackbar(`请检查题干！`, {
+        variant: "error",
+      });
+    }
+    if (!correct) {
+      enqueueSnackbar(`正确选项未填写！`, {
+        variant: "error",
+      });
       setCorrectErr(true);
-    } else if (!stem) {
-      setStemErr(true);
-    } else if (!correct) {
-      setCorrectErr(true);
-    } else {
+    }
+    if (detectEmpty(choices).length !== 0) {
+      detectEmpty(choices).forEach((num) => {
+        enqueueSnackbar(`请检查第${num + 1}个选项！`, {
+          variant: "error",
+        });
+      });
+    }
+    if (!choices.includes(correct)) {
+      enqueueSnackbar(`正确答案不是选项之一，请检查`, {
+        variant: "error",
+      });
+    }
+    console.log(detectEmpty([1, 2, 3]));
+    if (
+      stem &&
+      correct &&
+      choices.includes(correct) &&
+      detectEmpty(choices).length === 0
+    ) {
       dispatch(addSCQuestion(stem, img, choices, correct));
     }
   };
@@ -175,23 +201,18 @@ const SCChoices = ({ choices, setChoices }) => {
     setChoices(changedChoices);
   };
   const deleteChoices = (arynum) => {
-    const changedChoices = [
-      ...choices.slice(0, arynum),
-      ...choices.slice(arynum + 1, choices.length),
-    ];
+    const changedChoices = deleteArrayElement(choices, arynum);
     setChoices(changedChoices);
   };
   return (
     <Grid container spacing={2}>
       {choices.map((choice, arynum) => {
         const handleChoiceChange = (event) => {
-          const choiceToChange = arynum;
           const changedChoice = event.target.value;
-          changeChoices(choiceToChange, changedChoice);
+          changeChoices(arynum, changedChoice);
         };
         const handleChoiceDelete = () => {
-          const choiceToDelete = arynum;
-          deleteChoices(choiceToDelete);
+          deleteChoices(arynum);
         };
         return (
           <Grid item key={arynum} lg={3} xs={12}>
