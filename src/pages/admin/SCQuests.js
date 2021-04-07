@@ -23,6 +23,7 @@ import Header from "../../components/Header";
 import { addSCQuestion } from "../../reducers/singleChoiceReducer";
 import deleteArrayElement from "../../utils/deleteArrayElement";
 import detectEmpty from "../../utils/detectEmpty";
+import removeDuplicatedItem from "../../utils/removeDumplicatedItem";
 
 /** Render the whole page.*/
 const SCQuests = () => {
@@ -74,26 +75,36 @@ const AddSCQ = () => {
     //Detect all requirements
     if (!stem) {
       setStemErr(true);
-      enqueueSnackbar("请检查题干！", {
+      enqueueSnackbar("题干不得为空", {
         variant: "error",
       });
+      return 1;
     }
     if (!correct) {
       setCorrectErr(true);
-      enqueueSnackbar("正确选项未填写！", {
+      enqueueSnackbar("正确选项不得为空", {
         variant: "error",
       });
+      return 1;
     }
     if (detectEmpty(choices).length !== 0) {
       detectEmpty(choices).forEach((num) => {
-        enqueueSnackbar(`请检查第${num + 1}个选项！`, {
+        enqueueSnackbar(`第${num + 1}个选项不得为空`, {
           variant: "error",
         });
       });
+      return 1;
     }
-    if (stem && correct && detectEmpty(choices).length === 0) {
-      dispatch(addSCQuestion(stem, img, choices, correct));
+    if (choices.length !== removeDuplicatedItem(choices).length) {
+      enqueueSnackbar("选项存在重复，已自动去除", {
+        variant: "warning",
+      });
+      dispatch(
+        addSCQuestion(stem, img, removeDuplicatedItem(choices), correct)
+      );
+      return 1;
     }
+    dispatch(addSCQuestion(stem, img, choices, correct));
   };
 
   const handleStemChange = (event) => {

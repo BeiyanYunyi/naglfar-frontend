@@ -8,9 +8,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
+import { useDispatch } from "react-redux";
 import Header from "../components/Header";
 import MyLink from "../components/MyLink";
-import { useDispatch } from "react-redux";
 import { setSubject } from "../reducers/subjectReducer";
 
 const Home = () => {

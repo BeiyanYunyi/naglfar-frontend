@@ -13,8 +13,8 @@ import Links from "../components/Links";
 const Exam = () => {
   return (
     <>
-      <Container>
-        <Header />
+      <Header />
+      <Container style={{ maxWidth: "100%",paddingLeft: 64}}>
         <Typography gutterBottom variant="h6">
           可用题库
         </Typography>

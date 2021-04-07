@@ -22,7 +22,7 @@ const Links = () => {
             {...{ timeout: 300 * arynum }}
             key={link.url}
           >
-            <Grid item key={link.url} lg={4} md={6} sm={12} xs={12}>
+            <Grid item key={link.url} lg={3} md={6} sm={12} xs={12}>
               <MyLink to={`/exam${link.url}`} style={{ textDecoration: "none" }}>
                 <MyCard>
                   <CardActionArea style={{ width: "100%", height: "100%" }}>

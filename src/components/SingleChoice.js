@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { answerSCQuestion } from "../reducers/singleChoiceReducer";
 import MyCard from "./MyCard";
 
@@ -52,7 +53,7 @@ const SingleChoice = (prop) => {
                   value={choice}
                   control={<Radio />}
                   label={choice}
-                  key={choice}
+                  key={uuidv4()}
                 />
               );
             })}
