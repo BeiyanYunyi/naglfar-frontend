@@ -10,8 +10,12 @@ import {
 import React from "react";
 import Header from "../components/Header";
 import MyLink from "../components/MyLink";
+import { useDispatch } from "react-redux";
+import { setSubject } from "../reducers/subjectReducer";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  dispatch(setSubject(""));
   return (
     <Container>
       <Header />

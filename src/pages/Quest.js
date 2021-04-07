@@ -4,9 +4,12 @@ import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import ShortAnswers from "../components/ShortAnswer";
 import SingleChoices from "../components/SingleChoice";
+import { useDispatch } from "react-redux";
+import { setSubject } from "../reducers/subjectReducer";
 
 const Quest = () => {
-  console.log(useParams().subject);
+  const dispatch = useDispatch();
+  dispatch(setSubject(useParams().subject));
   return (
     <Container>
       <Header />
