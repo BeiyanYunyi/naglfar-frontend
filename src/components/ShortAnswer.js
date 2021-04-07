@@ -1,5 +1,4 @@
 import {
-  Card,
   CardContent,
   CardMedia,
   Divider,
@@ -12,6 +11,7 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { answerSAQuestion } from "../reducers/shortAnswerReducer";
+import MyCard from "./MyCard";
 
 const ShortAnswer = (prop) => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const ShortAnswer = (prop) => {
     dispatch(answerSAQuestion(prop.arynum, event.target.value));
   };
   return (
-    <Card>
+    <MyCard>
       {prop.quest.img ? (
         <>
           <CardMedia image={prop.quest.img} style={{ height: 250 }} />
@@ -43,7 +43,7 @@ const ShortAnswer = (prop) => {
           }}
         ></TextField>
       </CardContent>
-    </Card>
+    </MyCard>
   );
 };
 

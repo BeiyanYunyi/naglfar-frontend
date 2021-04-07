@@ -36,13 +36,13 @@ const SAQuests = () => {
           columns={columns}
           pageSize={5}
         />
-        <AddSCQ />
+        <AddSAQ />
       </Container>
     </>
   );
 };
 
-const AddSCQ = () => {
+const AddSAQ = () => {
   const [stem, setStem] = useState("");
   const [img, setImg] = useState("");
   const dispatch = useDispatch();

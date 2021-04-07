@@ -24,6 +24,7 @@ import { addSCQuestion } from "../../reducers/singleChoiceReducer";
 import deleteArrayElement from "../../utils/deleteArrayElement";
 import detectEmpty from "../../utils/detectEmpty";
 
+/** Render the whole page.*/
 const SCQuests = () => {
   const quests = useSelector((state) => state.singlechoices);
 
@@ -59,6 +60,7 @@ const SCQuests = () => {
   );
 };
 
+/** Component for user to add quests. */
 const AddSCQ = () => {
   const [stem, setStem] = useState("");
   const [stemErr, setStemErr] = useState(false);
@@ -72,15 +74,15 @@ const AddSCQ = () => {
     //Detect all requirements
     if (!stem) {
       setStemErr(true);
-      enqueueSnackbar(`请检查题干！`, {
+      enqueueSnackbar("请检查题干！", {
         variant: "error",
       });
     }
     if (!correct) {
-      enqueueSnackbar(`正确选项未填写！`, {
+      setCorrectErr(true);
+      enqueueSnackbar("正确选项未填写！", {
         variant: "error",
       });
-      setCorrectErr(true);
     }
     if (detectEmpty(choices).length !== 0) {
       detectEmpty(choices).forEach((num) => {
@@ -89,18 +91,7 @@ const AddSCQ = () => {
         });
       });
     }
-    if (!choices.includes(correct)) {
-      enqueueSnackbar(`正确答案不是选项之一，请检查`, {
-        variant: "error",
-      });
-    }
-    console.log(detectEmpty([1, 2, 3]));
-    if (
-      stem &&
-      correct &&
-      choices.includes(correct) &&
-      detectEmpty(choices).length === 0
-    ) {
+    if (stem && correct && detectEmpty(choices).length === 0) {
       dispatch(addSCQuestion(stem, img, choices, correct));
     }
   };
@@ -188,13 +179,27 @@ const AddSCQ = () => {
         </Grid>
       </Grid>
       <Divider style={{ marginTop: 5, marginBottom: 5 }} />
-      <SCChoices choices={choices} setChoices={setChoices} />
+      <SCChoices
+        choices={choices}
+        setChoices={setChoices}
+        correct={correct}
+        setCorrect={setCorrect}
+      />
     </>
   );
 };
 
-const SCChoices = ({ choices, setChoices }) => {
+/** Component to manage the choices of a quest. */
+const SCChoices = ({ choices, setChoices, correct, setCorrect }) => {
+  /** The function to handle the change of an choice,
+   * then change the choices array.*/
   const changeChoices = (arynum, cgdchs) => {
+    /* To check if the selector of correct answer match the choice we're editing.*/
+    if (correct === choices[arynum]) {
+      setCorrect(cgdchs);
+    }
+
+    /* Generate changed array of choices and update the original array.*/
     const changedChoices = choices.map((choice, arynumb) => {
       return arynumb === arynum ? cgdchs : choice;
     });
@@ -212,6 +217,9 @@ const SCChoices = ({ choices, setChoices }) => {
           changeChoices(arynum, changedChoice);
         };
         const handleChoiceDelete = () => {
+          if (correct === choice) {
+            setCorrect("");
+          }
           deleteChoices(arynum);
         };
         return (

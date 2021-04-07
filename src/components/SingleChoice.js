@@ -1,5 +1,4 @@
 import {
-  Card,
   CardContent,
   CardMedia,
   Divider,
@@ -15,6 +14,7 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { answerSCQuestion } from "../reducers/singleChoiceReducer";
+import MyCard from "./MyCard";
 
 const SingleChoice = (prop) => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const SingleChoice = (prop) => {
     dispatch(answerSCQuestion(prop.arynum, event.target.value));
   };
   return (
-    <Card>
+    <MyCard>
       {prop.quest.img ? (
         <>
           <CardMedia image={prop.quest.img} style={{ height: 250 }} />
@@ -59,7 +59,7 @@ const SingleChoice = (prop) => {
           </RadioGroup>
         </FormControl>
       </CardContent>
-    </Card>
+    </MyCard>
   );
 };
 
