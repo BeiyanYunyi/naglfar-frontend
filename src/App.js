@@ -30,7 +30,7 @@ const Main = () => {
   return (
     <ThemeProvider theme={theme}>
       <SnackbarProvider
-        maxSnack={3}
+        maxSnack={4}
         preventDuplicate
         ref={notistackRef}
         action={(key) => (

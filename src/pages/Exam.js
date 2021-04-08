@@ -14,7 +14,7 @@ const Exam = () => {
   return (
     <>
       <Header />
-      <Container style={{ maxWidth: "100%",paddingLeft: 64}}>
+      <Container style={{ maxWidth: "100%" }}>
         <Typography gutterBottom variant="h6">
           可用题库
         </Typography>

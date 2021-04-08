@@ -15,7 +15,6 @@ import {
 import { DataGrid } from "@material-ui/data-grid";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
-import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
@@ -23,6 +22,7 @@ import Header from "../../components/Header";
 import { addSCQuestion } from "../../reducers/singleChoiceReducer";
 import deleteArrayElement from "../../utils/deleteArrayElement";
 import detectEmpty from "../../utils/detectEmpty";
+import useMySnackbar from "../../utils/hooks/useMySnackbar";
 import removeDuplicatedItem from "../../utils/removeDumplicatedItem";
 
 /** Render the whole page.*/
@@ -70,41 +70,33 @@ const AddSCQ = () => {
   const [correctErr, setCorrectErr] = useState(false);
   const [img, setImg] = useState("");
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
+  const snackbar = useMySnackbar();
   const submitQuest = () => {
+    let err = false;
     //Detect all requirements
     if (!stem) {
       setStemErr(true);
-      enqueueSnackbar("题干不得为空", {
-        variant: "error",
-      });
-      return 1;
+      snackbar.err("题干不得为空");
+      err = true;
     }
     if (!correct) {
       setCorrectErr(true);
-      enqueueSnackbar("正确选项不得为空", {
-        variant: "error",
-      });
-      return 1;
+      snackbar.err("正确选项不得为空");
+      err = true;
     }
     if (detectEmpty(choices).length !== 0) {
       detectEmpty(choices).forEach((num) => {
-        enqueueSnackbar(`第${num + 1}个选项不得为空`, {
-          variant: "error",
-        });
+        snackbar.err(`第${num + 1}个选项不得为空`);
       });
-      return 1;
+      err = true;
     }
-    if (choices.length !== removeDuplicatedItem(choices).length) {
-      enqueueSnackbar("选项存在重复，已自动去除", {
-        variant: "warning",
-      });
-      dispatch(
-        addSCQuestion(stem, img, removeDuplicatedItem(choices), correct)
-      );
-      return 1;
+    if (choices.length !== removeDuplicatedItem(choices).length && !err) {
+      snackbar.warn("选项存在重复，已自动去除");
     }
-    dispatch(addSCQuestion(stem, img, choices, correct));
+    if (!err) {
+      const newChoices = removeDuplicatedItem(choices); // To remove the duplicated choices.
+      dispatch(addSCQuestion(stem, img, newChoices, correct));
+    }
   };
 
   const handleStemChange = (event) => {
