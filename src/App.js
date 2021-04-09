@@ -10,9 +10,7 @@ import Exam from "./pages/Exam";
 import Quest from "./pages/Quest";
 import AdminHome from "./pages/admin/AdminHome";
 import store from "./controllers/reducerCombiner";
-// styles
 
-// markup
 const App = () => {
   return (
     <Provider store={store}>

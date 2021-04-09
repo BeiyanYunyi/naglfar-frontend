@@ -10,6 +10,7 @@ import {
   Radio,
   RadioGroup,
   Typography,
+  CardActionArea,
 } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,18 +32,18 @@ const SingleChoice = (prop) => {
         </>
       ) : null}
       <CardContent>
-        <Typography gutterBottom>{prop.quest.stem}</Typography>
+        <CardActionArea
+          onClick={() => {
+            dispatch(answerSCQuestion(prop.arynum, ""));
+          }}
+        >
+          <Typography gutterBottom>{prop.quest.stem}</Typography>
+          <Typography variant="body2" style={{ color: "rgba(0, 0, 0, 0.54)" }}>
+            选项（点此清除本题已选项）
+          </Typography>
+        </CardActionArea>
         <FormControl>
-          <FormLabel>
-            <Typography
-              variant="body2"
-              onClick={() => {
-                dispatch(answerSCQuestion(prop.arynum, ""));
-              }}
-            >
-              选项（点此清除本题已选项）
-            </Typography>
-          </FormLabel>
+          <FormLabel></FormLabel>
           <RadioGroup
             onChange={handleChange}
             value={prop.quest.answer ? prop.quest.answer : ""}

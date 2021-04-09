@@ -1,16 +1,16 @@
 import {
-  Button,
-  Card,
   CardContent,
   Container,
   Grid,
   Grow,
   Typography,
+  CardActionArea,
 } from "@material-ui/core";
 import React from "react";
 import { useDispatch } from "react-redux";
 import Header from "../components/Header";
 import MyLink from "../components/MyLink";
+import MyCard from "../components/MyCard";
 import { setSubject } from "../reducers/subjectReducer";
 
 const Home = () => {
@@ -22,26 +22,26 @@ const Home = () => {
       <Grow in={true}>
         <Grid container spacing={2}>
           <Grid item lg={6} xs={12}>
-            <Card>
-              <CardContent style={{ textAlign: "center" }}>
-                <MyLink to="/exam" style={{ textDecoration: "none" }}>
-                  <Button>
+            <MyLink to="/exam" style={{ textDecoration: "none" }}>
+              <MyCard>
+                <CardActionArea style={{ width: "100%", height: "100%" }}>
+                  <CardContent style={{ textAlign: "center" }}>
                     <Typography variant="h6">来这里考试</Typography>
-                  </Button>
-                </MyLink>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </CardActionArea>
+              </MyCard>
+            </MyLink>
           </Grid>
           <Grid item lg={6} xs={12}>
-            <Card>
-              <CardContent style={{ textAlign: "center" }}>
-                <MyLink to="/admin" style={{ textDecoration: "none" }}>
-                  <Button>
+            <MyLink to="/admin" style={{ textDecoration: "none" }}>
+              <MyCard>
+                <CardActionArea style={{ width: "100%", height: "100%" }}>
+                  <CardContent style={{ textAlign: "center" }}>
                     <Typography variant="h6">来这里管理</Typography>
-                  </Button>
-                </MyLink>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </CardActionArea>
+              </MyCard>
+            </MyLink>
           </Grid>
         </Grid>
       </Grow>

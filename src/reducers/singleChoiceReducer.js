@@ -2,17 +2,16 @@ const initialState = [
   {
     stem: "TCP/IP协议模型分几层？",
     choice: ["3", "4", "5", "6"],
-    correct:"4"
+    correct: "4",
   },
   {
     stem: "奔腾处理器原来计划叫什么？",
     img:
       "https://cn.bing.com/th?id=OHR.HumpbackMom_ZH-CN0218207583_1920x1080.jpg",
     choice: ["8086", "80386", "80486", "80586"],
-    correct:"80586"
+    correct: "80586",
   },
 ];
-
 const singleChoiceReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ANSWERSC": {

@@ -7,6 +7,7 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  CardActionArea,
 } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +28,16 @@ const ShortAnswer = (prop) => {
         </>
       ) : null}
       <CardContent>
-        <Typography gutterBottom>{prop.quest.stem}</Typography>
+        <CardActionArea
+          onClick={() => {
+            dispatch(answerSAQuestion(prop.arynum, ""));
+          }}
+        >
+          <Typography gutterBottom>{prop.quest.stem}</Typography>
+          <Typography variant="body2" style={{ color: "rgba(0, 0, 0, 0.54)" }}>
+            （点此清除本题答案）
+          </Typography>
+        </CardActionArea>
         <TextField
           variant="outlined"
           autoComplete="off"
@@ -35,7 +45,7 @@ const ShortAnswer = (prop) => {
           multiline
           rows="4"
           rowsMax="10"
-          style={{ width: "100%" }}
+          style={{ width: "100%",paddingTop:5 }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">答：</InputAdornment>

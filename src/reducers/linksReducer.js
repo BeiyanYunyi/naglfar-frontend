@@ -1,12 +1,12 @@
 const initialState = [
   {
-    text: "计算机",
+    text: "测试服",
     url: "/it",
-    description: "对懂计算机的家伙来说，所有其他题库通关难度不会高于该题库。",
+    description: "先来这儿玩玩吧？",
     color: "#E95800",
     img: "",
   },
-  {
+/*  {
     text: "物理",
     url: "/phy",
     description: "大学物理，会卷你就来",
@@ -49,7 +49,7 @@ const initialState = [
       "包括但不限于：左翼无政府主义、空想（乌托邦）社会主义、国家社会主义等",
     color: "#DD0000",
     img: "",
-  },
+  },*/
 ];
 
 const linksReducer = (state = initialState, action) => {
