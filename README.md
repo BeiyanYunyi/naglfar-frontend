@@ -10,3 +10,7 @@ cd naglfar-frontend
 yarn
 yarn start
 ```
+
+## To-do List
+
+[here](https://github.com/lixiang810/naglfar-frontend/projects/1)
