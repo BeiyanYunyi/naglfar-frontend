@@ -39,7 +39,7 @@ const SingleChoice = (prop) => {
         >
           <Typography gutterBottom>{prop.quest.stem}</Typography>
           <Typography variant="body2" style={{ color: "rgba(0, 0, 0, 0.54)" }}>
-            选项（点此清除本题已选项）
+            （点此清除本题已选项）
           </Typography>
         </CardActionArea>
         <FormControl>

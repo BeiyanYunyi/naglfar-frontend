@@ -19,7 +19,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import Header from "../../components/Header";
-import { addSCQuestion } from "../../reducers/singleChoiceReducer";
+import {
+  addSCQuestion,
+  delSCQuestion,
+} from "../../reducers/singleChoiceReducer";
 import deleteArrayElement from "../../utils/deleteArrayElement";
 import detectEmpty from "../../utils/detectEmpty";
 import useMySnackbar from "../../utils/hooks/useMySnackbar";
@@ -27,8 +30,9 @@ import removeDuplicatedItem from "../../utils/removeDumplicatedItem";
 
 /** Render the whole page.*/
 const SCQuests = () => {
+  const [selectionModel, setSelectionModel] = useState([]);
   const quests = useSelector((state) => state.singlechoices);
-
+  const dispatch = useDispatch();
   const columns = [
     { field: "id", headerName: "题号", width: 100 },
     { field: "stem", headerName: "题干", width: 280 },
@@ -45,6 +49,11 @@ const SCQuests = () => {
     };
   });
 
+  const handleDeleteClick = () => {
+    dispatch(delSCQuestion(selectionModel));
+    setSelectionModel([]);
+  };
+
   return (
     <>
       <Header />
@@ -54,7 +63,27 @@ const SCQuests = () => {
           rows={rows}
           columns={columns}
           pageSize={5}
+          checkboxSelection
+          onSelectionModelChange={(newSelection) => {
+            setSelectionModel(
+              newSelection.selectionModel.map((select) => Number(select) - 1)
+            );
+          }}
+          selectionModel={selectionModel.map((select) =>
+            (select + 1).toString()
+          )}
         />
+        {selectionModel.length !== 0 && (
+          <>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDeleteClick}
+            >
+              删除所选项
+            </Button>
+          </>
+        )}
         <AddSCQ />
       </Container>
     </>
@@ -71,6 +100,7 @@ const AddSCQ = () => {
   const [img, setImg] = useState("");
   const dispatch = useDispatch();
   const snackbar = useMySnackbar();
+
   const submitQuest = () => {
     let err = false;
     //Detect all requirements
