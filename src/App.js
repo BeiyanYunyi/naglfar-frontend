@@ -8,6 +8,7 @@ import { Provider, useSelector } from "react-redux";
 import Home from "./pages/Home";
 import Exam from "./pages/Exam";
 import Quest from "./pages/Quest";
+import Score from "./pages/Score";
 import AdminHome from "./pages/admin/AdminHome";
 import store from "./controllers/reducerCombiner";
 
@@ -50,6 +51,9 @@ const Main = () => {
             </Route>
             <Route path="/exam">
               <Exam />
+            </Route>
+            <Route path="/score">
+              <Score />
             </Route>
             <Route path="/">
               <Home />

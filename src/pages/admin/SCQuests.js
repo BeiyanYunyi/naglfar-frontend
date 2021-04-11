@@ -39,7 +39,6 @@ const SCQuests = () => {
     { field: "choice", headerName: "选项", width: 280 },
     { field: "correct", headerName: "正确答案", width: 200 },
   ];
-
   const rows = quests.map((quest, arynum) => {
     return {
       id: arynum + 1,
@@ -84,14 +83,18 @@ const SCQuests = () => {
             </Button>
           </>
         )}
-        <AddSCQ />
+        <AddSCQ
+          selectionModel={selectionModel}
+          setSelectionModel={setSelectionModel}
+          quests={quests}
+        />
       </Container>
     </>
   );
 };
 
 /** Component for user to add quests. */
-const AddSCQ = () => {
+const AddSCQ = ({ selectionModel, setSelectionModel, quests }) => {
   const [stem, setStem] = useState("");
   const [stemErr, setStemErr] = useState(false);
   const [choices, setChoices] = useState([""]);
@@ -107,6 +110,11 @@ const AddSCQ = () => {
     if (!stem) {
       setStemErr(true);
       snackbar.err("题干不得为空");
+      err = true;
+    }
+    if (quests.map((quest) => quest.stem).includes(stem)) {
+      setStemErr(true);
+      snackbar.err("题库已有相同题干");
       err = true;
     }
     if (!correct) {
@@ -126,6 +134,7 @@ const AddSCQ = () => {
     if (!err) {
       const newChoices = removeDuplicatedItem(choices); // To remove the duplicated choices.
       dispatch(addSCQuestion(stem, img, newChoices, correct));
+      snackbar.success("添加成功！");
     }
   };
 
@@ -147,6 +156,14 @@ const AddSCQ = () => {
     } else {
       setCorrectErr(true);
     }
+  };
+  const handleEditClick = () => {
+    setStem(quests[selectionModel[0]].stem);
+    setImg(quests[selectionModel[0]].img);
+    setChoices(quests[selectionModel[0]].choice);
+    setCorrect(quests[selectionModel[0]].correct);
+    dispatch(delSCQuestion(selectionModel));
+    setSelectionModel([]);
   };
 
   return (
@@ -209,6 +226,16 @@ const AddSCQ = () => {
           >
             提交新题目
           </Button>
+          {selectionModel.length === 1 && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleEditClick}
+              style={{ height: 56, width: "50%" }}
+            >
+              编辑所选项
+            </Button>
+          )}
         </Grid>
       </Grid>
       <Divider style={{ marginTop: 5, marginBottom: 5 }} />
