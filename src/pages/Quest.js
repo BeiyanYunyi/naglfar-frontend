@@ -3,7 +3,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
-import ShortAnswers from "../components/ShortAnswer";
 import SingleChoices from "../components/SingleChoice";
 import { setSubject } from "../reducers/subjectReducer";
 import SendIcon from "@material-ui/icons/Send";
@@ -24,7 +23,6 @@ const Quest = () => {
         </Fab>
       </MyLink>
       <SingleChoices />
-      <ShortAnswers />
     </Container>
   );
 };

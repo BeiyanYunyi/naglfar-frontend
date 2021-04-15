@@ -1,8 +1,8 @@
 const initialState = [
   {
-    text: "测试服",
-    url: "/it",
-    description: "先来这儿玩玩吧？",
+    text: "综合测评",
+    url: "/comprehensive",
+    description: "因为题目不够就先综合了（屑颜）",
     color: "#E95800",
     img: "",
   },

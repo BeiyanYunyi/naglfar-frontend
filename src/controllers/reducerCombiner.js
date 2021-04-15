@@ -1,5 +1,4 @@
 import { combineReducers, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import historyReducer from "../reducers/historyReducer";
 import linksReducer from "../reducers/linksReducer";
 import shortAnswerReducer from "../reducers/shortAnswerReducer";
@@ -18,6 +17,6 @@ const reducer = combineReducers({
   subject: subjectReducer,
 });
 
-const store = createStore(reducer, composeWithDevTools());
+const store = createStore(reducer);
 
 export default store;

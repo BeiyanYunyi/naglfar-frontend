@@ -12,6 +12,10 @@ yarn
 yarn start
 ```
 
+## How to view users' answers
+
+Go to [https://paste.ubuntu.com/](https://paste.ubuntu.com/), add `/p/` and the string provided by the user, like this: `https://paste.ubuntu.com/p/JJ7QgW6DF7`
+
 ## To-do List
 
 [here](https://github.com/lixiang810/naglfar-frontend/projects/1)

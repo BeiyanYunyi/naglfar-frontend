@@ -21,23 +21,12 @@ const Home = () => {
       <Header />
       <Grow in={true}>
         <Grid container spacing={2}>
-          <Grid item lg={6} xs={12}>
+          <Grid item lg={12} xs={12}>
             <MyLink to="/exam" style={{ textDecoration: "none" }}>
               <MyCard>
                 <CardActionArea style={{ width: "100%", height: "100%" }}>
                   <CardContent style={{ textAlign: "center" }}>
                     <Typography variant="h6">来这里考试</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </MyCard>
-            </MyLink>
-          </Grid>
-          <Grid item lg={6} xs={12}>
-            <MyLink to="/admin" style={{ textDecoration: "none" }}>
-              <MyCard>
-                <CardActionArea style={{ width: "100%", height: "100%" }}>
-                  <CardContent style={{ textAlign: "center" }}>
-                    <Typography variant="h6">来这里管理</Typography>
                   </CardContent>
                 </CardActionArea>
               </MyCard>
